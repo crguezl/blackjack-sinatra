@@ -30,6 +30,6 @@ end
 
 # Post Form
 post '/form_render' do
-	data = params['some_data']
+	@data = params['some_data']
 	erb :form_render
 end
