@@ -126,7 +126,7 @@ post '/game/hit' do
 end
 
 post '/game/stay' do
-	if total(session[:player_cards]) > total(session[:player_cards])
+	if total(session[:player_cards]) > total(session[:dealer_cards])
 		@alert_message = "Congratulations, your score is higher than the dealer. You win!"
 		@alert_type = "alert-success"
 		@game_over = true
