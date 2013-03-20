@@ -1,29 +1,53 @@
-<h1>New Game</h1>
+<h1>Blackjack Sinatra</h1>
 <p>Welcome to Blackjack <%= session[:username] %>. Good Luck!</p>
 
 <div class="row">
 	<div class="span6">
 		<h3>Player Cards</h3>
-		<% session[:player_cards].each do |card| %>	
-		<div class="cards">
+		<div class="cards player-cards">
+			<% session[:player_cards].each do |card| %>	
 			<span class="card">
 				<img src="/images/cards/<%= find_suit(card[0]) %>_<%= find_face_value(card[1]) %>.jpg" /></span>
+			<% end %>
 		</div>
-		<% end %>
 	</div>
 	
 	<div class="span6">
 		<h3>Dealer Cards</h3>
-		<% session[:dealer_cards].each do |card| %>	
-		<div class="cards">
+		<div class="cards dealer-cards">
+			<% session[:dealer_cards].each do |card| %>	
 			<span class="card">
 				<img src="/images/cards/<%= find_suit(card[0]) %>_<%= find_face_value(card[1]) %>.jpg" /></span>
+			<% end %>
 		</div>
-		<% end %>
 	</div>
 
 </div>
 
+<div class="totals row">
+	<h4 class="total player-total span6">Your total is: <%= total(session[:player_cards]) %></span></h4>
+	<h4 class="total dealer-total span6">Dealer total is: <%= total(session[:dealer_cards]) %></span></h4>
+</div>
+
 <hr>
 
-<p>Would you like to hit or stay?</p>
+<% if @game_over %>
+	<a class="btn btn-large btn-block btn-primary" href="/">New Game?</a>	
+<% else %>
+
+<div class="hit-or-stay row">
+
+	<form action="/game/hit" method="post" class="span6">
+	  <fieldset>
+	    <button type="submit" class="btn btn-large btn-success btn-block"><i class="icon-plus"></i> Hit</button>
+	  </fieldset>
+	</form>
+
+	<form action="/game/stay" method="post" class="span6">
+	  <fieldset>
+	    <button type="submit" class="btn btn-large btn-danger btn-block"><i class="icon-ban-circle"></i> Stay</button>
+	  </fieldset>
+	</form>
+</div>
+
+<% end %>

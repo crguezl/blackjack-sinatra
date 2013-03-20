@@ -4,7 +4,6 @@ require 'sinatra'
 set :sessions, true
 
 helpers do
-
 	def user_logged_in?
 		if session[:username]
 			true
@@ -42,6 +41,27 @@ helpers do
 		ret_val
 	end
 
+	def total(cards) # From Tealeaf OO solution video
+    face_values = cards.map{|card| card[1] }
+
+    total = 0
+    face_values.each do |val|
+      if val == "A"
+        total += 11
+      else
+        total += (val.to_i == 0 ? 10 : val.to_i)
+      end
+    end
+
+    #correct for Aces
+    face_values.select{|val| val == "A"}.count.times do
+      break if total <= 21
+      total -= 10
+    end
+
+    total
+  end
+
 end
 
 # Home 
@@ -60,7 +80,8 @@ end
 post '/new_user' do
 	session[:username] = params['username']
 	if session[:username].length == 0
-		@error = "You didn't enter your name, please try again."
+		@alert_message = "You didn't enter your name, please try again."
+		@alert_type = "alert-error"
 		erb :new_user
 	else
 		redirect '/game'
@@ -68,6 +89,7 @@ post '/new_user' do
 end
 
 get '/game' do
+
 	suits = ['H', 'D', 'C', 'S']
 	values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 	session[:deck] = suits.product(values).shuffle!
@@ -80,6 +102,39 @@ get '/game' do
 	session[:player_cards] << session[:deck].pop
 	session[:dealer_cards] << session[:deck].pop
 
+	if total(session[:player_cards]) == 21
+		@alert_message = "Congratulations, you got Blackjack! You win."
+		@alert_type = "alert-success"
+		@game_over = true
+	end
+
+	erb :game
+end
+
+post '/game/hit' do
+	session[:player_cards] << session[:deck].pop
+	if total(session[:player_cards]) == 21
+		@alert_message = "Congratulations, you got Blackjack. You win!"
+		@alert_type = "alert-success"
+		@game_over = true
+	elsif total(session[:player_cards]) > 21
+		@alert_message = "Sorry, you busted. You lose."
+		@alert_type = "alert-error"
+		@game_over = true
+	end
+	erb :game
+end
+
+post '/game/stay' do
+	if total(session[:player_cards]) > total(session[:player_cards])
+		@alert_message = "Congratulations, your score is higher than the dealer. You win!"
+		@alert_type = "alert-success"
+		@game_over = true
+	else
+		@alert_message = "Sorry, your score isn't higher than the dealer. You lose."
+		@alert_type = "alert-error"
+		@game_over = true
+	end
 	erb :game
 end
 

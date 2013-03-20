@@ -12,12 +12,10 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
-           <a class="brand" href="/">Blackjack Sinatra</a>
-            <ul class="nav">
-              <li><a href="/">Home</a></li>
-            </ul>
+           <span class="brand" href="/">Blackjack Sinatra</span>
             <% if user_logged_in? %>
             <ul class="nav pull-right">
+              <li><a href="/">New Game</a></li>
               <li><a href="/logout">Logout</a></li>
             </ul>
             <% end %>
@@ -26,10 +24,10 @@
     </div>
 
   <div class="container">
-    <%if @error %>
-      <div class="alert alert-error"><%=@error%></div>
+    <%if @alert_message %>
+      <div class="alert <%= @alert_type %>" ><%= @alert_message %></div>
     <% end %>
-      <%= yield %>
+    <%= yield %>
   </div>
   </body>
 </html>
