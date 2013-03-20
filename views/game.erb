@@ -1,2 +1,29 @@
-<h2>Game</h2>
+<h1>New Game</h1>
 <p>Welcome to Blackjack <%= session[:username] %>. Good Luck!</p>
+
+<div class="row">
+	<div class="span6">
+		<h3>Player Cards</h3>
+		<% session[:player_cards].each do |card| %>	
+		<div class="cards">
+			<span class="card">
+				<img src="/images/cards/<%= find_suit(card[0]) %>_<%= find_face_value(card[1]) %>.jpg" /></span>
+		</div>
+		<% end %>
+	</div>
+	
+	<div class="span6">
+		<h3>Dealer Cards</h3>
+		<% session[:dealer_cards].each do |card| %>	
+		<div class="cards">
+			<span class="card">
+				<img src="/images/cards/<%= find_suit(card[0]) %>_<%= find_face_value(card[1]) %>.jpg" /></span>
+		</div>
+		<% end %>
+	</div>
+
+</div>
+
+<hr>
+
+<p>Would you like to hit or stay?</p>

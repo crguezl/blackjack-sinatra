@@ -2,6 +2,18 @@ body {
 	padding-top: 50px;
 	font-family: 'Open Sans', sans-serif;
 }
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
+}
+
+.cards .card {	
+	float: left;
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin: 0 10px 10px 0;
+	width: 100px; height: 150px;
+	-webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: #f5f5f5;
 }
