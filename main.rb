@@ -131,7 +131,7 @@ post '/game/stay' do
     session[:dealer_cards] << session[:deck].pop
   end
   if total(session[:dealer_cards]) > 21
-    @alert_message = "Dealer bust. You win!"
+    @alert_message = "Dealer busts. You win!"
     @alert_type = "alert-success"
     @game_over = true
   elsif total(session[:player_cards]) > total(session[:dealer_cards])
