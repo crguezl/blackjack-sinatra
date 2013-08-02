@@ -1,5 +1,8 @@
+Blackjack Game in Sinatra
+=========================
+
 Introduction 
-============
+------------
 
 Blackjack, also known as twenty-one, is the most widely played
 casino banking game in the world.Blackjack is a comparing card
@@ -55,8 +58,8 @@ If the player and dealer have the same point
 total, this is called a "push" and the player typically does not
 win or lose money on that hand.  
 
-Blackjack Game in Sinatra
-=========================
+Play
+----
 
 Game on Heroku: http://blackjacksinatra.herokuapp.com/
 
